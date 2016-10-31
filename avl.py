@@ -57,10 +57,10 @@ class AVLTree(object) :
             h_l = self.get_height(node.left)
             h_r = self.get_height(node.right)
             if h_l > h_r+1 :
-                print 'left_rebalance {0},{1}'.format(h_l,h_r)
+                # print 'left_rebalance {0},{1}'.format(h_l,h_r)
                 node = self.left_rebalance(node)
             elif h_r > h_l+1 :
-                print 'right_rebalance {0},{1}'.format(h_l,h_r)
+                # print 'right_rebalance {0},{1}'.format(h_l,h_r)
                 node = self.right_rebalance(node)
             else :
                 node = self.fix_height(node)
