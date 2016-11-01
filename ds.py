@@ -62,3 +62,13 @@ class Edge(object) :
         # y=m*x+c
         self.m = None
         self.c = None
+
+class BeachLine(object) :
+    def __init__(self, point, bl_next=None, bl_prev=None, vert=None) :
+        self.point = point
+        self.bl_next = bl_next
+        self.bl_prev = bl_prev
+        self.vert = vert
+        self.e0 = None
+        self.e1 = None
+
