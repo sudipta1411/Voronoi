@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import heapq
+from  ds import Point
 
 class PrioQueue(object) :
     '''A custom min heap where p<q means
@@ -8,6 +9,7 @@ class PrioQueue(object) :
     This is the lexicographic ordering.
     '''
     class Wrapper(object) :
+        '''this class wraps a point object with a comparator'''
         def __init__(self, val) :
             self.val = val
 
@@ -35,13 +37,16 @@ class PrioQueue(object) :
 
     def __make_queue(self) :
         for val in self.data :
-            heapq.heappush(self.hq,PrioQueue.Wrapper(val))
+            heapq.heappush(self.hq, PrioQueue.Wrapper(val.get_point()))
 
     def push(self,val) :
-        heapq.heappush(self.hq,PrioQueue.Wrapper(val))
+        heapq.heappush(self.hq, PrioQueue.Wrapper(val.get_point()))
 
     def pop(self) :
         try :
-            return heapq.heappop(self.hq)
+            popped = heapq.heappop(self.hq)
+            return Point(popped[0], popped[1])
         except IndexError :
             print '[ERROR] Index out of range'
+
+    def empty(self) : return len(self.hq) == 0
