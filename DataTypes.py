@@ -69,7 +69,8 @@ class Parabola(object) :
         self.start = start
         self.end = end
 
-    @property foci(self) : return self.foci
+    @property
+    foci(self) : return self.foci
 
     @property.setter
     def foci(self, foci) : self.foci = foci
