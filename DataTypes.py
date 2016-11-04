@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from collections import namedtuple
+# from collections import namedtuple
 import math
 
 class Point(object) :
@@ -112,7 +112,7 @@ class Segment(object) :
 class Parabola(object) :
     # A parabola is determined by a focal point and directrix
     # if p=(px,py) is the focus and L:y=mx+c is the directrix the the parabola is
-    # x^2 + y^2 -2(x*px+y*py) = delta*px^2 - m^2*delta*py^2 
+    # x^2 + y^2 -2(x*px+y*py) = -delta*px^2 - m^2*delta*py^2 
     # + delta*(c^2-2m*px*py-2c*py+2mc*px) where delta = 1/(1+m^2)
     def __init__(self, foci, direc, start=None, end=None) :
         self._foci = foci

@@ -2,6 +2,7 @@
 
 import math
 from DataTypes import *
+import intersection
 
 class EndPoint(object) :
     def __init__(self, pt, line, left_sep=None, \
@@ -14,7 +15,8 @@ class EndPoint(object) :
         self.below = below
 
 def avgx(ep1, ep2) :
-    return (ep1.pt.pt.px + ep2.pt.pt.px) / 2.0
+    return Point((ep1.pt.pt.px + ep2.pt.pt.px) / 2.0, \
+            (ep1.pt.pt.py + ep2.pt.pt.py) / 2.0)
 
 class Voronoi(object) :
     # lines is a list of line segments,
@@ -60,6 +62,7 @@ class Voronoi(object) :
     # When the recursive call end in method @build, we have
     # the entire diagram in @output.
     def _build(self, m, l_id, r_id) :
+        print '{0} {1}'.format(l_id, r_id)
         # Basic error checking
         if l_id < 0 :
             raise ValueError("Invalid left seperator index = {0}".format(l_id))
@@ -71,6 +74,16 @@ class Voronoi(object) :
 
         if m == 1:
             # base case
+            point = self.ep[l_id]
+            quad = Quad(point.above, point.below,
+                    self.sep[l_id], self.sep[r_id])
+            quad.active = True
+            if point.above is not None :
+                quad.l_windows.append(intersection.seg_intersect(point.above, self.sep[l_id]))
+                quad.r_windows.append(intersection.seg_intersect(point.above, self.sep[r_id]))
+            if point.below is not None :
+                quad.l_windows.append(intersection.seg_intersect(point.below, self.sep[l_id]))
+                quad.r_windows.append(intersection.seg_intersect(point.below, self.sep[r_id]))
             return
         # Divide
         m_ceil = int(math.ceil(m / 2.0))
@@ -103,14 +116,15 @@ class Voronoi(object) :
 
 # TEST
 def main() :
-    s1 = Segment(Point(6,5), Point(7,8))
-    s2 = Segment(Point(8,4), Point(10,16))
-    s3 = Segment(Point(2,8), Point(15,10))
+    s1 = Segment(Point(6,5), Point(14,20))
+    s2 = Segment(Point(15,7), Point(13,9))
+    s3 = Segment(Point(10,8), Point(15,10))
 
     lines = [s1,s2,s3]
 
     vor = Voronoi(lines)
     vor.build()
+    return vor
 
 if __name__ == '__main__' :
     main()
